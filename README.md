@@ -83,5 +83,5 @@ Viene selezionato l'arco con la maggiore edge betweennes.
 
 ### Stage 4
 
-L'arco selezionato in precedenza viene rimosso eliminando il nodo target dalla lista degli adiacenti del nodo source. Per fare ciò si utilizza la classe `EliminaAdiacenti.java`
+L'arco selezionato in precedenza viene rimosso eliminando il nodo target dalla lista degli adiacenti del nodo source. Per fare ciò si utilizza la classe `EliminaAdiacenti.java`.
 
