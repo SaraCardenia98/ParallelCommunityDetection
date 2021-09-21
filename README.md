@@ -1,13 +1,13 @@
 # ParallelCommunityDetection
 
-## Abstract
 
+## Abstract
 L'obiettivo del progetto è quello di implementare un algoritmo distribuito per l'individuazione delle comunità all'interno di una rete. 
 Per farlo abbiamo implementato in Spark la versione distribuita che utilizza il paradigma MapReduce dell'algoritmo di Girvan–Newman, chiamato SPB-MRA (Shortest Path Betweenness Map Reduce Algorithm). Lo svolgimento del progetto fa riferimento all'articolo *"Parallel community detection on large graphs with MapReduce and GraphChi"* scritto da S. Moon, J. G. Lee, M. Kang, M. Choy, J. W. Lee.
 Il linguaggio di programmazione utilizzato è Java. Come DBMS di supporto, per la memorizzazione e visualizzazione del grafo, viene utilizzato Neo4j.
 
-## I dati
 
+## I dati
 Fonte: Network Repository
 Link: https://networkrepository.com/email-enron-only.php
 Il grafo orientato è costituito da 143 nodi e 623 archi e rappresenta la corrispondenza email tra una rete di utenti.
@@ -15,8 +15,8 @@ I file dei dati caricati nella cartella del progetto sono i seguenti:
 - archi143.csv
 - nodi143.csv
 
-## I file .java
 
+## I file .java
 | Classe        | Descrizione           |
 |:---------- |:------------- |
 | `ParallelCommunityDetection.java` | classe main |
