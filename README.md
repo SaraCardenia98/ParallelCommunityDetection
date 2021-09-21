@@ -51,11 +51,11 @@ Lavora con tuple costituite da 7 attributi:
 Le tuple iniziali, create tramite la classe `Tuple.java`, sono pari al numero di nodi del grafo e vengono inizializzate come descritto sopra.
 L'obiettivo di questa fase è di calcolare gli shortest paths tra ciascuna coppia di nodi del grafo.
 
-[] Fase Map: per ciascuna tupla in input, se lo status è "inactive" non è necessaria alcuna operazione; se lo status è "active" esso viene cambiato in "inactive", viene aggiunto 1 alla distanza e il nodo target viene aggiunto al pathInfo. 
+[ ] Fase Map: per ciascuna tupla in input, se lo status è "inactive" non è necessaria alcuna operazione; se lo status è "active" esso viene cambiato in "inactive", viene aggiunto 1 alla distanza e il nodo target viene aggiunto al pathInfo. 
 In aggiunta, vengono generate nuove tuple che hanno come targetId ciascuno dei nodi adiacenti al sourceId. Per queste nuove tuple lo status ha valore "active", la adjList è vuota e gli altri valori sono gli stessi della prima tupla generata in questa fase. Per la creazione di tali tuple viene utilizzata la classe `NuoveTuple.java`.
 
 Per aggiungere il valore di adjList alle nuove tuple create, è stato utilizzato l'operatore di join tra la `JavaPairRDD` contenente gli adiacenti di ciascun nodo e quella contenente le tuple.
 
-[] Fase Reduce: tra le tuple con la stessa coppia targetId, sourceId, rimangono solo quelle con distanza minima. Se più tuple hanno la stessa distanza, il peso diventa pari al numero di tuple che condividono lo stesso minimo.
+[ ] Fase Reduce: tra le tuple con la stessa coppia targetId, sourceId, rimangono solo quelle con distanza minima. Se più tuple hanno la stessa distanza, il peso diventa pari al numero di tuple che condividono lo stesso minimo.
 
 
