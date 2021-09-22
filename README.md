@@ -10,8 +10,8 @@ Il linguaggio di programmazione utilizzato è Java. Come DBMS di supporto, per l
 
 ## I dati
 
-Fonte: Network Repository \\
-Link: https://networkrepository.com/email-enron-only.php \\
+Fonte: Network Repository \
+Link: https://networkrepository.com/email-enron-only.php \
 Il grafo orientato è costituito da 143 nodi e 623 archi e rappresenta la corrispondenza email tra una rete di utenti.
 I file dei dati caricati nella cartella del progetto sono i seguenti:
 - archi143.csv
