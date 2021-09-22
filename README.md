@@ -27,7 +27,7 @@ I file dei dati caricati nella cartella del progetto sono i seguenti:
 | `NuoveTuple.java` | classe che implementa la fase Map del primo Stage |
 | `TupleAggiornate.java` | classe che distingue le tuple con o senza nodi adiacenti al nodo target |
 | `EdgeBetweenness.java` | classe utilizzata per calcolare la "edge betweenness" di ciascun arco |
-| `EliminaAdiacenti.java` | classe che taglia l'arco selezionato nello Stage 3 |
+| `SeparaAdiacenti.java` | classe che separa ogni nodo dai suoi adiacenti |
 | `ArchiFinali.java` | classe che restituisce gli archi del grafo finale |
 | `StampaTuple.java` | classe utilizzata per stampare correttamente oggetti di tipo "Tuple" |
 | `GrafoIniziale.java` | classe main utilizzata per la creazione del grafo iniziale su Neo4j |
@@ -83,5 +83,4 @@ Viene selezionato l'arco con la maggiore edge betweennes.
 
 ### Stage 4
 
-L'arco selezionato in precedenza viene rimosso eliminando il nodo target dalla lista degli adiacenti del nodo source. Per fare ciò si utilizza la classe `EliminaAdiacenti.java`.
-
+L'arco selezionato nello Stage 3 viene rimosso eliminando il nodo target dalla lista degli adiacenti del nodo source. Per fare ciò utilizziamo una JavaPairRDD<String, String> (dAdj) contenente in chiave ciascun nodo e come valore la stringa degli adiacenti del nodo in chiave. Questa operazione viene sviluppata dalla classe 'SeparaAdiacenti.java'. Successivamente utilizzando la funzione '.filter' selezioniamo da dAdj solamente il record che ha come chiave il nodo origine dell'arco da tagliare. Il risultato della filter è salvato nella JavaPairRDD<String, String> dArco. Il valore di dArco viene modificato attraverso l'utilizzo di una stringa (nuoviAdj) contenente il nodo in questione e i nuovi adiacenti separati da ";". L'effettiva eliminazione del nodo target dell'arco selezionato avviene con un ciclo *for* in cui vengono concatenati a nuoviAdj solamente i nodi diversi dal nodo target dell'arco da tagliare.
