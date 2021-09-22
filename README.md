@@ -83,4 +83,10 @@ Viene selezionato l'arco con la maggiore edge betweennes.
 
 ### Stage 4
 
-L'arco selezionato nello Stage 3 viene rimosso eliminando il nodo target dalla lista degli adiacenti del nodo source. Per fare ciò utilizziamo una JavaPairRDD<String, String> (dAdj) contenente in chiave ciascun nodo e come valore la stringa degli adiacenti del nodo in chiave. Questa operazione viene sviluppata dalla classe 'SeparaAdiacenti.java'. Successivamente utilizzando la funzione '.filter' selezioniamo da dAdj solamente il record che ha come chiave il nodo origine dell'arco da tagliare. Il risultato della filter è salvato nella JavaPairRDD<String, String> dArco. Il valore di dArco viene modificato attraverso l'utilizzo di una stringa (nuoviAdj) contenente il nodo in questione e i nuovi adiacenti separati da ";". L'effettiva eliminazione del nodo target dell'arco selezionato avviene con un ciclo *for* in cui vengono concatenati a nuoviAdj solamente i nodi diversi dal nodo target dell'arco da tagliare.
+L'arco selezionato nello Stage 3 viene rimosso eliminando il nodo target dalla lista degli adiacenti del nodo source. Per fare ciò utilizziamo una JavaPairRDD<String, String> (dAdj) contenente in chiave ciascun nodo e come valore la stringa degli adiacenti del nodo in chiave. Questa operazione viene sviluppata dalla classe 'SeparaAdiacenti.java'. Successivamente utilizzando la funzione '.filter' selezioniamo da dAdj solamente il record che ha come chiave il nodo origine dell'arco da tagliare. Il risultato della filter è salvato nella JavaPairRDD<String, String> dArco. Il valore di dArco viene modificato attraverso l'utilizzo di una stringa (nuoviAdj) contenente il nodo in questione e i nuovi adiacenti separati da ";". L'effettiva eliminazione del nodo target dell'arco selezionato avviene con un ciclo *for* in cui vengono concatenati a nuoviAdj solamente i nodi diversi dal nodo target dell'arco da tagliare. 
+
+
+#### Neo4j
+
+Essendo l'applicazione costruita per individuare comunità all'interno di una rete, abbiamo ritenuto particolarmente adatto al nostro caso rappresentare il grafo iniziale e quello finale utilizzando il DBMS Neo4j. 
+La creazione del grafo iniziale su Neo4j avviene attraverso la classe 'GrafoIniziale.java', mentre quella del grafo finale avviene direttamente nel main di 'ParallelCommunityDetection.java'. 
