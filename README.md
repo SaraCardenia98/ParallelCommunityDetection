@@ -8,7 +8,7 @@ Per farlo abbiamo implementato in Spark la versione distribuita che utilizza il 
 Il linguaggio di programmazione utilizzato è Java. Come DBMS di supporto, per la memorizzazione e visualizzazione del grafo, viene utilizzato Neo4j.
 
 
-## I dati
+## Il dataset
 
 Fonte: Network Repository \
 Link: https://networkrepository.com/email-enron-only.php \
