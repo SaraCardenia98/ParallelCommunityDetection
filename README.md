@@ -25,9 +25,7 @@ I file dei dati caricati nella cartella del progetto sono i seguenti:
 | `ParallelCommunityDetection.java` | classe main |
 | `Tuple.java` | classe utilizzata per la creazione degli oggetti di tipo "Tuple" |
 | `NuoveTuple.java` | classe che implementa la fase Map del primo Stage |
-| `TupleAggiornate.java` | classe che distingue le tuple con o senza nodi adiacenti al nodo target |
 | `EdgeBetweenness.java` | classe utilizzata per calcolare la "edge betweenness" di ciascun arco |
-| `SeparaAdiacenti.java` | classe che separa ogni nodo dai suoi adiacenti |
 | `ArchiFinali.java` | classe che restituisce gli archi del grafo finale |
 | `StampaTuple.java` | classe utilizzata per stampare correttamente oggetti di tipo "Tuple" |
 | `GrafoIniziale.java` | classe main utilizzata per la creazione del grafo iniziale su Neo4j |
@@ -46,16 +44,18 @@ Lavora con tuple costituite da 7 attributi:
 - adjList: indica la lista di nodi adiacenti al nodo target.
 
 
+### Importazione dei dati 
+
+La nostra applicazione legge il file `.csv` contenente tutti gli archi del grafo, creando una `JavaRDD<String> dArchi`. Tramite una operazione di `.mapToPair` su dArchi, crea una `JavaPairRDD<String, String> dArchi2` con in chiave il nodo origine e in valore il nodo destinazione. Con la `.reduceByKey` vengono concatenati i nodi destinazione di ciascun nodo, ottenendo una `JavaPairRDD<String, String> dAdiacenti`. Per facilitare le operazioni successive, abbiamo deciso di trattenere le informazioni in `dAdiacenti` in una variabile locale attraverso una `HashMap<String, String> adiacenze`.
+
 ### Stage 1
 
 Le tuple iniziali, create tramite la classe `Tuple.java`, sono pari al numero di nodi del grafo e vengono inizializzate come descritto sopra.
 L'obiettivo di questa fase è di calcolare gli shortest paths tra ciascuna coppia di nodi del grafo.
 
 - Fase Map: per ciascuna tupla in input, se lo status è "inactive" non è necessaria alcuna operazione; se lo status è "active" esso viene cambiato in "inactive", viene aggiunto 1 alla distanza e il nodo target viene aggiunto al pathInfo. 
-In aggiunta, vengono generate nuove tuple che hanno come targetId ciascuno dei nodi adiacenti al sourceId. Per queste nuove tuple lo status ha valore "active", la adjList è vuota e gli altri valori sono gli stessi della prima tupla generata in questa fase. 
-Per la creazione di tali tuple viene utilizzata la classe `NuoveTuple.java`.
-
-Per aggiungere il valore di adjList alle nuove tuple create, è stato utilizzato l'operatore di join tra la `JavaPairRDD` contenente gli adiacenti di ciascun nodo e quella contenente le tuple.
+In aggiunta, vengono generate nuove tuple che hanno come targetId ciascuno dei nodi adiacenti al sourceId. Per queste nuove tuple lo status ha valore "active", la adjList viene aggiornata inserendo i nodi adiacenti al nuovo nodo target e gli altri valori sono gli stessi della prima tupla generata in questa fase. 
+Per la creazione di tali tuple viene utilizzata la classe `NuoveTuple.java` che prende in input la variabile locale `adiacenze`.
 
 - Fase Reduce: tra le tuple con la stessa coppia targetId, sourceId, rimangono solo quelle con distanza minima. Se più tuple hanno la stessa distanza, il peso diventa pari al numero di tuple che condividono lo stesso minimo. 
 L'applicazione gestisce quest'ultimo caso creando inizialmente un'unica tupla che contiene le informazioni di tutte le tuple con stessa distanza separate da ":". Vengono poi create le tuple definitive tramite la funzione `.flatMapToPair`, andando a recuperare le informazioni salvate prima.
@@ -83,7 +83,7 @@ Viene selezionato l'arco con la maggiore edge betweennes.
 
 ### Stage 4
 
-L'arco selezionato nello Stage 3 viene rimosso eliminando il nodo target dalla lista degli adiacenti del nodo source. Per fare ciò utilizziamo una `JavaPairRDD<String, String> dAdj` che ha come chiave ciascun nodo e come valore la stringa degli adiacenti del nodo in chiave. Questa operazione viene sviluppata dalla classe `SeparaAdiacenti.java`. Successivamente, utilizzando la funzione `.filter`, selezioniamo da `dAdj` solamente il record che ha come chiave il nodo origine dell'arco da tagliare. Il risultato della filter è salvato nella `JavaPairRDD<String, String> dArco`. Il valore di `dArco` viene modificato attraverso l'utilizzo di una stringa `nuoviAdj` contenente il nodo in questione e i nuovi adiacenti separati da ";". L'effettiva eliminazione del nodo target dell'arco selezionato avviene con un ciclo *for* in cui vengono concatenati a `nuoviAdj` solamente i nodi diversi dal nodo target dell'arco da tagliare. 
+L'arco selezionato nello Stage 3 viene rimosso, tramite una operazione di `.filter`, rimuovendolo da `dArchi2`. Si aggiornano sia la `JavaPairRDD` che la `HashMap` contenenti la lista di adiacenze.
 
 
 ## Neo4j
