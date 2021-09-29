@@ -26,7 +26,6 @@ I file dei dati caricati nella cartella del progetto sono i seguenti:
 | `Tuple.java` | classe utilizzata per la creazione degli oggetti di tipo "Tuple" |
 | `NuoveTuple.java` | classe che implementa la fase Map del primo Stage |
 | `EdgeBetweenness.java` | classe utilizzata per calcolare la "edge betweenness" di ciascun arco |
-| `ArchiFinali.java` | classe che restituisce gli archi del grafo finale |
 | `StampaTuple.java` | classe utilizzata per stampare correttamente oggetti di tipo "Tuple" |
 | `GrafoIniziale.java` | classe main utilizzata per la creazione del grafo iniziale su Neo4j |
 
